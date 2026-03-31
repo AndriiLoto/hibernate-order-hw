@@ -14,7 +14,7 @@ import org.hibernate.query.Query;
 @Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
-    public Order addOrder(Order order) {
+    public Order add(Order order) {
         Transaction transaction = null;
         Session session = null;
         try {
@@ -39,7 +39,7 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getByUser(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Order> query = session.createQuery("FROM Order o "
-                    + "JOIN FETCH o.tickets"
+                    + "JOIN FETCH o.tickets "
                     + "WHERE o.user.id = :id", Order.class);
             query.setParameter("id",user.getId());
             return query.getResultList();
